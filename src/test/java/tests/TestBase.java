@@ -17,7 +17,7 @@ public class TestBase {
     @BeforeAll
     static void beforeAll() {
         Configuration.browser = BrowserstackDriver.class.getName();
-        Configuration.browserSize = null;
+        Configuration.browserSize = null;  //для мобильной автоматизации (или для десктопа)
         Configuration.timeout = 30000;
     }
 
