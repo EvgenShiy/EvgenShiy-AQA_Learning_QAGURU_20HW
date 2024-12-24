@@ -4,8 +4,7 @@ import org.aeonbits.owner.Config;
 
 
 @Config.Sources({
-        "classpath:properties/${env}.properties",
-//        "classpath:properties/android.properties"
+        "classpath:properties/${env}.properties"
 })
 public interface WebDriverConfig extends Config {
 
