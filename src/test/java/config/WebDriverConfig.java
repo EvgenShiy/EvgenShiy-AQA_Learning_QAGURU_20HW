@@ -5,27 +5,28 @@ import org.aeonbits.owner.Config;
 
 @Config.Sources({
         "classpath:properties/${env}.properties",
-        "classpath:properties/android.properties"
+//        "classpath:properties/android.properties"
 })
 public interface WebDriverConfig extends Config {
 
-    @Key("browserstack.user")
-    String getBrowserstackUser();
-
-    @Key("browserstack.key")
-    String getBrowserstackKey();
-
-    @Key("app")
-    @DefaultValue("bs://sample.app")
-    String getApp();
-
-    @Key("remoteUrl")
-    @DefaultValue("https://hub.browserstack.com/wd/hub")
-    String getRemoteUrl();
 
     @Key("device")
+    @DefaultValue("Samsung Galaxy S22 Ultra")
     String getDevice();
 
     @Key("os_version")
+    @DefaultValue("12.0")
     String getOsVersion();
+
+    @Key("projectName")
+    @DefaultValue("Default Mobile Java Project")
+    String getProjectName();
+
+    @Key("buildName")
+    @DefaultValue("Default-browserstack-build")
+    String getBuildName();
+
+    @Key("testName")
+    @DefaultValue("Default Mobile Test")
+    String getTestName();
 }
