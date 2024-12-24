@@ -58,8 +58,11 @@ tasks.withType(Test) {
     }
 }
 
-task android(type: Test) {
+task runMobileTests(type: Test) {
     useJUnitPlatform {
         includeTags("mobile_test")
     }
+    // Передаем переменную окружения env для выбора properties-файла
+    systemProperty "env", project.hasProperty("env") ? project.env : "default"
 }
+
