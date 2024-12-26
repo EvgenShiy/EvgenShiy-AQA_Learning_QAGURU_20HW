@@ -1,4 +1,4 @@
-package screens.components;
+package screens.android.components;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
