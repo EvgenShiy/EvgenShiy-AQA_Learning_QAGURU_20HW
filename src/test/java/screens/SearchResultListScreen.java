@@ -1,11 +1,12 @@
-package screens.components;
+package screens;
 
 import com.codeborne.selenide.ElementsCollection;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$$;
 import static io.appium.java_client.AppiumBy.id;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class SearchResultListScreen {
 
@@ -13,11 +14,14 @@ public class SearchResultListScreen {
 
     @Step("Проверить, что контент найден")
     public  void checkSearchResult() {
-        assertThat(listOfSearchResultElements).size().isGreaterThan(0);
+        assertThat(listOfSearchResultElements)
+                .as("Список результатов поиска пуст")
+                .size().isGreaterThan(0);
     }
 
-    @Step("Открыть самую первую статью")
-    public  void openArticle() {
+    @Step("Открыть первую статью в списке")
+    public  void openTopic() {
+        assertThat(listOfSearchResultElements).isNotEmpty();
         listOfSearchResultElements.first().click();
     }
 

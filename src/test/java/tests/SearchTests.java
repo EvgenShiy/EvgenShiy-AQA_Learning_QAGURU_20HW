@@ -1,45 +1,46 @@
 package tests;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import screens.ErrorScreen;
+import screens.MainScreen;
+import screens.SearchResultListScreen;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
-import static io.appium.java_client.AppiumBy.*;
 import static io.qameta.allure.Allure.step;
 
 public class SearchTests extends TestBase {
 
+    private final MainScreen mainScreen = new MainScreen();
+    private final SearchResultListScreen searchResultListScreen = new SearchResultListScreen();
+    private final ErrorScreen errorScreen = new ErrorScreen();
+
     @Test
+    @DisplayName("Проверка успешного поиска контента")
     @Tag("mobile_test")
+    @Tag("browserstack_test")
     void successfulSearchTest() {
-        step("Type search", () -> {
-            $(accessibilityId("Search Wikipedia")).click();
-            $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("Appium");
+
+        step("Напечатать в поиске слово 'Appium'", () -> {
+            mainScreen.enterSearchValue("Appium");
         });
-        step("Verify content found", () ->
-            $$(id("org.wikipedia.alpha:id/page_list_item_title"))
-                    .shouldHave(sizeGreaterThan(0)));
+        step("Проверить, что контент найден", searchResultListScreen::checkSearchResult);
     }
 
     @Test
+    @DisplayName("Проверка отображения ошибки при открытии статьи")
     @Tag("mobile_test")
+    @Tag("browserstack_test")
     void checkErrorMessageTextTest() {
+
         step("Напечатать в поиске слово 'Appium'", () -> {
-            $(accessibilityId("Search Wikipedia")).click();
-            $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("Appium");
+            mainScreen.enterSearchValue("Appium");
         });
-        step("Открыть первую статью", () -> {
-            $$(id("org.wikipedia.alpha:id/page_list_item_title")).first().click();
-        });
+
+        step("Открыть первую статью", searchResultListScreen::openTopic);
 
         step("Проверить текст сообщения об ошибке", () -> {
-            $(id("org.wikipedia.alpha:id/view_wiki_error_text")).shouldHave(text("An error occurred"));
+            errorScreen.checkErrorMessage("An error occurred");
         });
     }
-
-
-
-
 }
